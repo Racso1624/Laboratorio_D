@@ -12,7 +12,7 @@ class SyntaxTree(object):
         self.regex = regex
         # Se agrega la raiz al final de la expresion
         self.postfix =  Regex(self.regex).postfix_expression
-        self.postfix.append("#")
+        self.postfix.append("#") #CAMBIARLO PARA CADA DEFINICION
         self.postfix.append(".")
         self.node_list = []
         self.tree_root = None
@@ -33,20 +33,20 @@ class SyntaxTree(object):
         for character in self.postfix:
             # Si es unario solo se crea el hijo a la izquierda
             if(isinstance(character, str) and character in "+*?"):
-                new_node = Node(character)
+                new_node = Node(character, True)
                 new_node.left_child = node_stack.pop()
                 node_stack.append(new_node)
                 self.node_list.append(new_node)
             # Si es binario se crean los hijos de izquierda y derecha
             elif(isinstance(character, str) and character in ".|"):
-                new_node = Node(character)
+                new_node = Node(character, True)
                 new_node.right_child = node_stack.pop()
                 new_node.left_child = node_stack.pop()
                 node_stack.append(new_node)
                 self.node_list.append(new_node)
             # Si es un simbolo solo se guarda en el stack
             else:
-                new_node = Node(character, position_counter)
+                new_node = Node(character, False, position_counter)
                 node_stack.append(new_node)
                 self.node_list.append(new_node)
         
@@ -100,13 +100,14 @@ class SyntaxTree(object):
 class Node(object):
     
     # Se inicia con el caracter y la posicion de manera nula
-    def __init__(self, character, position = None):
+    def __init__(self, character, isOperator,  position = None):
         # Se guardan los datos de cada nodo con respecto a su pos
         self.character = character
         self.firstpos = set()
         self.lastpos = set()
         self.followpos = set()
         self.position = position
+        self.isOperator = isOperator
         # Para cada nodo se guardan sus hijos
         self.left_child = None
         self.right_child = None
