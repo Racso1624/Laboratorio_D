@@ -233,6 +233,7 @@ class File(object):
                                 apostrophes_value = line[(first_apostrophe + 1):i]
                                 value_ascii = ord(apostrophes_value)
                                 final_regex.append(value_ascii)
+                                final_regex.append(f"#{apostrophes_value}")
                                 first_apostrophe = None
                     # Si tiene comillas dobles el caracter se revisa
                     elif('"' in line):
@@ -247,6 +248,7 @@ class File(object):
                             elif(line[i] == '"' and first_apostrophe != None):
                                 apostrophes_value = line[(first_apostrophe + 1):i]
                                 final_regex.append(apostrophes_value)
+                                final_regex.append(f"#{apostrophes_value}")
                                 first_apostrophe = None
                     # Si no tiene nada de lo anterior
                     else:
@@ -255,5 +257,6 @@ class File(object):
                             # Si existe una definicion en la linea se agrega a la expresion final
                             if i in line:
                                 final_regex[len(final_regex):len(final_regex)] = self.regular_expressions[i]
+                                final_regex.append(f"#{i}")
         # Se guarda la expresion regular final en el atributo de la clase
         self.regex = final_regex
