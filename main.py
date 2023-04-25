@@ -8,13 +8,13 @@ from afd_construction import *
 from afd_minimization import *
 
 # Se toma el filename
-filename = "./tests/slr-1.yal"
+filename = "./tests/slr-3.yal"
 # Se obtiene el filereader
 file_reader = File(filename)
 # Se obtiene la regex
 regex = file_reader.regex
 print(regex)
 # Se crea el AFD
-afd = afdConstruction(regex, "Yalex 1")
-afd.simulation(" ")
+afd = afdConstruction(regex, "Yalex 3")
+afd.simulation("123123")
 # afd_mini = afdMinimization(afd, "AFD 1", "Yalex 1")

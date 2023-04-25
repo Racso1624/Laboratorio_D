@@ -43,6 +43,9 @@ class AFD(object):
     
     # Se utiliza el algoritmo de e-closure para calcular move
     def move(self, states, character):
+
+        character = ord(character)
+        print(character)
         # Se inicia el stack con los estados de T
         states_stack = states
         # Se inicia sin estados
