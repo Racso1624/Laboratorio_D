@@ -98,7 +98,7 @@ def getSymbols(regex):
     symbols = []
 
     for i in regex:
-        if(isinstance(i, int)):
+        if(isinstance(i, int) and i not in symbols):
             symbols.append(i)
         # elif(i not in symbols and i not in ".|*+?()"):
         #     symbols.append(i)
@@ -157,9 +157,6 @@ def afdConstruction(regex, title):
 
         # Se agrega un contador para marcar los estados
         state_counter += 1
-    for i in set_final_states:    
-        print(i.character)
-
         
     # Se crea el AFD
     afd = AFD("AFD Directo", title)

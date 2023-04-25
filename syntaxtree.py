@@ -69,7 +69,10 @@ class SyntaxTree(object):
     # Funcion para graficar cada nodo
     def graphNode(self, node, graph):
         # Se crea el nodo con un id y su caracter
-        graph.node(str(id(node)), str(node.character))
+        if(isinstance(node.character, int)):
+            graph.node(str(id(node)), chr(node.character))
+        else:
+            graph.node(str(id(node)), str(node.character))
         # Si tiene el izquierdo
         if(node.left_child):
             # Se conectan los nodos

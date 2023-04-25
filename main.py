@@ -16,3 +16,5 @@ regex = file_reader.regex
 print(regex)
 # Se crea el AFD
 afd = afdConstruction(regex, "Yalex 1")
+afd.simulation(" ")
+# afd_mini = afdMinimization(afd, "AFD 1", "Yalex 1")
