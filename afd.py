@@ -81,7 +81,7 @@ class AFD(object):
 
         # Se crean las transiciones de los estados
         for transition in self.transitions:
-            graph.edge(str(transition[0]), str(transition[2]), label=transition[1])
+            graph.edge(str(transition[0]), str(transition[2]), label=str(transition[1]))
 
         # Se renderiza
         graph.render(f"./images/{self.afd_name}" + self.title, format="png", view=True)

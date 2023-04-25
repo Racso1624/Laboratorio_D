@@ -8,10 +8,10 @@ from syntaxtree import *
 def nullable(node):
 
     # Se retornan nulos los simbolos que lo son
-    if(node.character in "ε?*" and node.isOperator):
+    if(node.isOperator and node.character in "ε?*"):
         return True
     # Para el or se retorna los nulos de los dos hijos con or
-    elif(node.character == "|" and node.isOperator):
+    elif(node.isOperator and node.character == "|"):
         return (nullable(node.left_child) or nullable(node.right_child))
     # Para concatenacion se retorna el nulo de los dos hijos con and
     elif(node.character == "." and node.isOperator):
@@ -27,19 +27,19 @@ def nullable(node):
 def firstpos(node):
 
     # Si es epsilon se regresa un vacio
-    if(node.character == "ε" and node.isOperator):
+    if(node.isOperator and node.character == "ε"):
         return set()
     # Si es un or se regresa la union de los dos hijos
-    elif(node.character == "|" and node.isOperator):
+    elif(node.isOperator and node.character == "|"):
         return (firstpos(node.right_child).union(firstpos(node.left_child)))
     # Si es concatenacion se regresa la union si el izquierdo es nulo, del contrario es el izquierdo
-    elif(node.character == "." and node.isOperator):
+    elif(node.isOperator and node.character == "."):
         if(nullable(node.left_child)):
             return (firstpos(node.right_child).union(firstpos(node.left_child)))
         else:
             return firstpos(node.left_child)
     # Para las cerraduras se regresa el firstpos de su hijo
-    elif(node.character in "*+?" and node.isOperator):
+    elif(node.isOperator and node.character in "*+?"):
         return firstpos(node.left_child)
     # Si es un caracter se regresa solo la posicion
     else:
@@ -49,19 +49,19 @@ def firstpos(node):
 def lastpos(node):
 
     # Para epsilon se regresa un vacio
-    if(node.character == "ε" and node.isOperator):
+    if(node.isOperator and node.character == "ε"):
         return set()
     # Si es un or se regresa la union de los dos hijos
-    elif(node.character == "|" and node.isOperator):
+    elif(node.isOperator and node.character == "|"):
         return (lastpos(node.right_child).union(lastpos(node.left_child)))
     # Si es concatenacion se regresa la union si el derecho es nulo, del contrario es el derecho
-    elif(node.character == "." and node.isOperator):
+    elif(node.isOperator and node.character == "."):
         if(nullable(node.right_child)):
             return (lastpos(node.right_child).union(lastpos(node.left_child)))
         else:
             return lastpos(node.right_child)
     # Para las cerraduras se regresa el firstpos de su hijo
-    elif(node.character in "*+?" and node.isOperator):
+    elif(node.isOperator and node.character in "*+?"):
         return lastpos(node.left_child)
     # Si es un caracter se regresa solo la posicion
     else:
@@ -70,7 +70,7 @@ def lastpos(node):
 # Se utiliza el algoritmo para el followpos
 def followpos(node):
     # Para cada caracter de concatenacion se realiza el algoritmo
-    if(node.character == "." and node.isOperator):
+    if(node.isOperator and node.character == "."):
         # Se toma el lastpos y se itera
         pos_i = lastpos(node.left_child)
         # Para cada posicion que regresa lastpos
@@ -78,7 +78,7 @@ def followpos(node):
             # Se agrega la union del followpos con el firstpos del nodo derecho
             i.followpos = i.followpos.union(firstpos(node.right_child))
     # Para los caracteres de cerradura se realiza lo siguiente
-    elif(node.character in "*+" and node.isOperator):
+    elif(node.isOperator and node.character in "*+"):
         # Se toma lastpos y se itera
         pos_i = lastpos(node.left_child)
         # Para cada posicion que regresa lastpos
@@ -99,10 +99,9 @@ def getSymbols(regex):
 
     for i in regex:
         if(isinstance(i, int)):
-            i = chr(i)
             symbols.append(i)
-        elif(i not in symbols and i not in ".|*+?()"):
-            symbols.append(i)
+        # elif(i not in symbols and i not in ".|*+?()"):
+        #     symbols.append(i)
 
     return symbols
 
@@ -158,6 +157,8 @@ def afdConstruction(regex, title):
 
         # Se agrega un contador para marcar los estados
         state_counter += 1
+    for i in set_final_states:    
+        print(i.character)
 
         
     # Se crea el AFD

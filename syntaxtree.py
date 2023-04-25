@@ -12,8 +12,6 @@ class SyntaxTree(object):
         self.regex = regex
         # Se agrega la raiz al final de la expresion
         self.postfix =  Regex(self.regex).postfix_expression
-        self.postfix.append("#") #CAMBIARLO PARA CADA DEFINICION
-        self.postfix.append(".")
         self.node_list = []
         self.tree_root = None
         self.tree_name = name
@@ -111,7 +109,7 @@ class Node(object):
         # Para cada nodo se guardan sus hijos
         self.left_child = None
         self.right_child = None
-        self.asciiChecker()
+        #self.asciiChecker()
     
     # Funcion para cambiar de ascii
     def asciiChecker(self):

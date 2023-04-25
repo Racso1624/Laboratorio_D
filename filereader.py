@@ -107,12 +107,12 @@ class File(object):
                                             first_value = ' '
                                             first_value = ord(first_value)
                                         elif(first_value.startswith("\\")):
-                                            first_value.replace("\\", '')
-                                            
+                                            first_value = first_value.replace("\\", '')
+                                            print(first_value)
                                             if(first_value == "n"):
-                                                first_value == ord("\n")
+                                                first_value = ord("\n")
                                             elif(first_value == "t"):
-                                                first_value == ord("\t")
+                                                first_value = ord("\t")
                                         value_definition.append(first_value)
                                     # Se itera en todos los valores
                                     index_counter += 1
