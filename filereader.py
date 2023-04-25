@@ -108,12 +108,13 @@ class File(object):
                                             first_value = ord(first_value)
                                         elif(first_value.startswith("\\")):
                                             first_value = first_value.replace("\\", '')
-                                            print(first_value)
                                             if(first_value == "n"):
                                                 first_value = ord("\n")
                                             elif(first_value == "t"):
                                                 first_value = ord("\t")
                                         value_definition.append(first_value)
+                                        if(value[index_counter + 1] != ']'):
+                                            value_definition.append("|")
                                     # Se itera en todos los valores
                                     index_counter += 1
                         # Si el charset se define entre comillas dobles, por lo tanto son valores uno despues de otro

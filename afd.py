@@ -8,7 +8,6 @@ class AFD(object):
 
     def __init__(self, name, title):
         self.regex = None
-        self.states_counter = 0
         self.states = []
         self.transitions = []
         self.initial_state = []
@@ -18,34 +17,37 @@ class AFD(object):
         self.title = title
 
     # Se realiza la simulacion con el algoritmo del libro
-    def simulation(self, string):
-        # Se inicializan los estados con e_closure del inicial
-        states = [self.initial_state]
-        # Se inicia el conteo de caracteres de la cadena
-        character_count = 0
+    def simulation(self, filename):
+        file = open(filename, 'r').read()
+        file_stack = []
+        for i in file:
+            file_stack.append(ord(i))
+        characters_list = []
+        while(len(file_stack) != 0):
+            # Se inicializan los estados con e_closure del inicial
+            states = [self.initial_state]
+            characters_list.append(file_stack.pop())
+            # Se inicia el conteo de caracteres de la cadena
+            character_count = 0
+            # Mientras hayan caracteres para verificar en el string
+            print(characters_list)
+            while(character_count < len(characters_list)):
+                # Se toman los estados devueltos por e_closure del move con el caracter
+                states = self.move(states, characters_list[character_count])
+                # Se pasa al siguiente caracter
+                character_count += 1
+            # Se hacen dos sets para lograr hacer operaciones de conjuntos entre ellos
+            set_states = set(states)
+            set_final_states = set(self.final_state)
 
-        # Mientras hayan caracteres para verificar en el string
-        while(character_count < len(string)):
-            # Se toman los estados devueltos por e_closure del move con el caracter
-            states = self.move(states, string[character_count])
-            # Se pasa al siguiente caracter
-            character_count += 1
-
-        # Se hacen dos sets para lograr hacer operaciones de conjuntos entre ellos
-        set_states = set(states)
-        set_final_states = set(self.final_state)
-
-        # Se verifica que los estados encontrados se encuentren en el conjunto de estados finales
-        if(set_states.intersection(set_final_states).__len__() != 0):
-            print("Cadena Aceptada")
-        else:
-            print("Cadena No Aceptada") 
+            # Se verifica que los estados encontrados se encuentren en el conjunto de estados finales
+            if(set_states.intersection(set_final_states).__len__() != 0):
+                print("Cadena Aceptada")
+            else:
+                print("Cadena No Aceptada") 
     
     # Se utiliza el algoritmo de e-closure para calcular move
     def move(self, states, character):
-
-        character = ord(character)
-        print(character)
         # Se inicia el stack con los estados de T
         states_stack = states
         # Se inicia sin estados
@@ -58,6 +60,7 @@ class AFD(object):
             for i in self.transitions:
                 # Se revisa que tenga transicion con el caracter
                 if(i[0] == state and i[1] == character):
+                    print("SI ENTRO")
                     # Si el estado no esta en los resultados se ingresa
                     if(i[2] not in states_result):
                         states_result.append(i[2])

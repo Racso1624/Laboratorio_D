@@ -6,7 +6,6 @@ from syntaxtree import *
 
 # Se toma el algortimo para nullable
 def nullable(node):
-
     # Se retornan nulos los simbolos que lo son
     if(node.isOperator and node.character in "ε?*"):
         return True
@@ -14,10 +13,10 @@ def nullable(node):
     elif(node.isOperator and node.character == "|"):
         return (nullable(node.left_child) or nullable(node.right_child))
     # Para concatenacion se retorna el nulo de los dos hijos con and
-    elif(node.character == "." and node.isOperator):
+    elif(node.isOperator and node.character == "."):
         return (nullable(node.left_child) and nullable(node.right_child))
     # Para la cerradura positiva se regresa el nulo del hijo
-    elif(node.character == "+" and node.isOperator):
+    elif(node.isOperator and node.character == "+"):
         return nullable(node.left_child)
     # Si es un caracter no es nulo
     else:
@@ -100,8 +99,8 @@ def getSymbols(regex):
     for i in regex:
         if(isinstance(i, int) and i not in symbols):
             symbols.append(i)
-        # elif(i not in symbols and i not in ".|*+?()"):
-        #     symbols.append(i)
+        elif(i not in symbols and i not in ".|*+?()"):
+            symbols.append(i)
 
     return symbols
 
