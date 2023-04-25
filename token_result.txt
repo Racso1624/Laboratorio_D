@@ -4,3 +4,7 @@
 'E3' = ID
 '\n' = WHITESPACE
 'hola' = ID
+'\n' = WHITESPACE
+'yong' = ID
+'\n' = WHITESPACE
+'if' = IF

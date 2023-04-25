@@ -251,7 +251,8 @@ class File(object):
                             # Se guarda el valor como tal y se guarda en la expresion
                             elif(line[i] == '"' and first_apostrophe != None):
                                 apostrophes_value = line[(first_apostrophe + 1):i]
-                                final_regex.append(apostrophes_value)
+                                for i in apostrophes_value:
+                                    final_regex.append(ord(i))
                                 final_regex.append(f"#{apostrophes_value}")
                                 actual_token = f"#{apostrophes_value}"
                                 first_apostrophe = None
@@ -265,10 +266,9 @@ class File(object):
                                 final_regex.append(f"#{i}")
                                 actual_token = f"#{i}"
                     if(actual_token != ""):
-                        print(line)
                         first_bracket = line.index("{")
                         second_bracket = line.index("}")
-                        code_return = line[first_bracket + 2:second_bracket - 1]
+                        code_return = line[first_bracket + 1:second_bracket]
                         self.tokens_list[actual_token] = code_return
         # Se guarda la expresion regular final en el atributo de la clase
         self.regex = final_regex
