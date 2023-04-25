@@ -24,7 +24,7 @@ def simulation(filename, tokenScanner, afd):
             if(len(file_stack) != 0):
                 characters_list.append(file_stack.pop(0))
                 look_ahead = True
-            set_final_look_ahead = simulate_string(characters_list)
+            set_final_look_ahead = simulate_string(characters_list, initial_state, final_states, transitions)
             if(set_final_look_ahead):
                 last_final = set_final_look_ahead.pop()
                 last_token = final_states[last_final]
@@ -36,21 +36,21 @@ def simulation(filename, tokenScanner, afd):
                     token_string = ""
                     for i in characters_list:
                         token_string += chr(i)
-                    token =  tokenScanner(token_string)
-                    token_file.write(f"{token_string} → {token}\n")
+                    token =  tokenScanner(last_token)
+                    token_file.write(f"{repr(token_string)} = {token}\n")
                     characters_list = []
                     last_token = None
                 else:
                     error_char = chr(characters_list[0])
-                    token =  tokenScanner(error_char)
-                    token_file.write(f"{token_string} → {token}\n")
+                    token =  tokenScanner(last_token)
+                    token_file.write(f"{repr(error_char)} = {token}\n")
                     characters_list = []
     if(len(characters_list) != 0 and last_token):
         token_string = ""
         for i in characters_list:
             token_string += chr(i)
-        token =  tokenScanner(token_string)
-        token_file.write(f"{token_string} → {token}\n")
+        token =  tokenScanner(last_token)
+        token_file.write(f"{repr(token_string)} = {token}")
 
 
 # Se realiza la simulacion con el algoritmo del libro para una cadena

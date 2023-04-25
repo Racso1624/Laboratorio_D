@@ -1,0 +1,6 @@
+'3' = ERROR LEXICO
+'.' = ERROR LEXICO
+'2' = ERROR LEXICO
+'E3' = ID
+'\n' = WHITESPACE
+'hola' = ID
