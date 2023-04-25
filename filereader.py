@@ -8,6 +8,7 @@ class File(object):
         self.filename = filename
         self.regular_expressions = {}
         self.regex = []
+        self.tokens_list = {}
         self.read()
 
     # Se crea la funcion para leer el archivo
@@ -214,6 +215,7 @@ class File(object):
                     tokens = True
                 # Si esta verdadera la variable de rule tokens
                 elif(tokens):
+                    actual_token = ""
                     # Se toman las llaves del diccionario
                     dictionary_keys = list(self.regular_expressions.keys())
                     # Si la linea tiene un or se agrega a la expresion final
@@ -235,6 +237,7 @@ class File(object):
                                 value_ascii = ord(apostrophes_value)
                                 final_regex.append(value_ascii)
                                 final_regex.append(f"#{apostrophes_value}")
+                                actual_token = f"#{apostrophes_value}"
                                 first_apostrophe = None
                     # Si tiene comillas dobles el caracter se revisa
                     elif('"' in line):
@@ -250,6 +253,7 @@ class File(object):
                                 apostrophes_value = line[(first_apostrophe + 1):i]
                                 final_regex.append(apostrophes_value)
                                 final_regex.append(f"#{apostrophes_value}")
+                                actual_token = f"#{apostrophes_value}"
                                 first_apostrophe = None
                     # Si no tiene nada de lo anterior
                     else:
@@ -259,5 +263,12 @@ class File(object):
                             if i in line:
                                 final_regex[len(final_regex):len(final_regex)] = self.regular_expressions[i]
                                 final_regex.append(f"#{i}")
+                                actual_token = f"#{i}"
+                    if(actual_token != ""):
+                        print(line)
+                        first_bracket = line.index("{")
+                        second_bracket = line.index("}")
+                        code_return = line[first_bracket + 2:second_bracket - 1]
+                        self.tokens_list[actual_token] = code_return
         # Se guarda la expresion regular final en el atributo de la clase
         self.regex = final_regex

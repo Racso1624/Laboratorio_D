@@ -52,14 +52,18 @@ class AFD(object):
                         token_string = ""
                         for i in characters_list:
                             token_string += chr(i)
-                        print(token_string + " " + last_token)
+                        print(repr(token_string) + " " + last_token)
                         characters_list = []
                         last_token = None
                     else:
                         error_char = chr(characters_list[0])
-                        print(error_char + " " + "Error Lexico")
+                        print(repr(error_char) + " " + "Error Lexico")
                         characters_list = []
-
+        if(len(characters_list) != 0 and last_token):
+            token_string = ""
+            for i in characters_list:
+                token_string += chr(i)
+            print(repr(token_string) + " " + last_token)
     # Se realiza la simulacion con el algoritmo del libro para una cadena
     def simulate_string(self, string):
         # Se inicializan los estados con e_closure del inicial
