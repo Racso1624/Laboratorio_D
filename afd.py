@@ -26,32 +26,39 @@ class AFD(object):
         last_token = None
         while(len(file_stack) != 0):
             characters_list.append(file_stack.pop(0))
+            # print("Characters")
+            # print(characters_list)
             set_final = self.simulate_string(characters_list)
 
             if(set_final):
                 last_final = set_final.pop()
                 last_token = self.final_states[last_final]
             else:
-                # characters_list.append(file_stack.pop(0))
-                # set_final_look_ahead = self.simulate_string(characters_list)
-                # if(set_final_look_ahead):
-                #     last_final = set_final_look_ahead.pop()
-                #     last_token = self.final_states[last_final]
-                #     print(last_token)
-                # else:
-                if(last_token):
-                    file_stack.insert(0, characters_list.pop())
-                    # file_stack.insert(0, characters_list.pop())
-                    token_string = ""
-                    for i in characters_list:
-                        token_string += chr(i)
-                    print(token_string + " " + last_token)
-                    characters_list = []
-                    last_token = None
+                look_ahead = False
+                if(len(file_stack) != 0):
+                    characters_list.append(file_stack.pop(0))
+                    look_ahead = True
+                set_final_look_ahead = self.simulate_string(characters_list)
+                if(set_final_look_ahead):
+                    last_final = set_final_look_ahead.pop()
+                    last_token = self.final_states[last_final]
                 else:
-                    error_char = chr(characters_list[0])
-                    print(error_char + " " + "Error Lexico")
-                    characters_list = []
+                    if(look_ahead):
+                        file_stack.insert(0, characters_list.pop())
+                    # print("FILE")
+                    # print(file_stack)
+                    if(last_token):
+                        file_stack.insert(0, characters_list.pop())
+                        token_string = ""
+                        for i in characters_list:
+                            token_string += chr(i)
+                        print(token_string + " " + last_token)
+                        characters_list = []
+                        last_token = None
+                    else:
+                        error_char = chr(characters_list[0])
+                        print(error_char + " " + "Error Lexico")
+                        characters_list = []
 
     # Se realiza la simulacion con el algoritmo del libro para una cadena
     def simulate_string(self, string):

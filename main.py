@@ -8,7 +8,7 @@ from afd_construction import *
 from scanner_producer import *
 
 # Se toma el filename
-filename = "./tests/slr-1.yal"
+filename = "./tests/slr-3.yal"
 # Se obtiene el filereader
 file_reader = File(filename)
 # Se obtiene la regex
