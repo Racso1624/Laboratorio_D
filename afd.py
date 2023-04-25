@@ -22,34 +22,57 @@ class AFD(object):
         file_stack = []
         for i in file:
             file_stack.append(ord(i))
-        print(file_stack)
         characters_list = []
         last_token = None
         while(len(file_stack) != 0):
-            # Se inicializan los estados con e_closure del inicial
-            states = [self.initial_state]
             characters_list.append(file_stack.pop(0))
-            print(characters_list)
-            # Se inicia el conteo de caracteres de la cadena
-            character_count = 0
-            # Mientras hayan caracteres para verificar en el string
-            while(character_count < len(characters_list)):
-                # Se toman los estados devueltos por e_closure del move con el caracter
-                states = self.move(states, characters_list[character_count])
-                # Se pasa al siguiente caracter
-                character_count += 1
-            # Se hacen dos sets para lograr hacer operaciones de conjuntos entre ellos
-            final_states_keys = list(self.final_states.keys())
-            set_states = set(states)
-            set_final_states = set(final_states_keys)
+            set_final = self.simulate_string(characters_list)
 
-            # Se verifica que los estados encontrados se encuentren en el conjunto de estados finales
-            if(set_states.intersection(set_final_states).__len__() != 0):
-                last_final = set_states.intersection(set_final_states).pop()
+            if(set_final):
+                last_final = set_final.pop()
                 last_token = self.final_states[last_final]
-                print(last_token)
             else:
-                print("Cadena No Aceptada") 
+                # characters_list.append(file_stack.pop(0))
+                # set_final_look_ahead = self.simulate_string(characters_list)
+                # if(set_final_look_ahead):
+                #     last_final = set_final_look_ahead.pop()
+                #     last_token = self.final_states[last_final]
+                #     print(last_token)
+                # else:
+                if(last_token):
+                    file_stack.insert(0, characters_list.pop())
+                    # file_stack.insert(0, characters_list.pop())
+                    token_string = ""
+                    for i in characters_list:
+                        token_string += chr(i)
+                    print(token_string + " " + last_token)
+                    characters_list = []
+                    last_token = None
+                else:
+                    error_char = chr(characters_list[0])
+                    print(error_char + " " + "Error Lexico")
+                    characters_list = []
+
+    # Se realiza la simulacion con el algoritmo del libro para una cadena
+    def simulate_string(self, string):
+        # Se inicializan los estados con e_closure del inicial
+        states = [self.initial_state]
+        # Se inicia el conteo de caracteres de la cadena
+        character_count = 0
+        # Mientras hayan caracteres para verificar en el string
+        while(character_count < len(string)):
+            # Se toman los estados devueltos por e_closure del move con el caracter
+            states = self.move(states, string[character_count])
+            # Se pasa al siguiente caracter
+            character_count += 1
+        # Se hacen dos sets para lograr hacer operaciones de conjuntos entre ellos
+        set_states = set(states)
+        set_final_states = set(self.final_states)
+        # Se verifica que los estados encontrados se encuentren en el conjunto de estados finales
+        if(set_states.intersection(set_final_states).__len__() != 0):
+            return set_states.intersection(set_final_states)
+        else:
+            return False
     
     # Se utiliza el algoritmo de e-closure para calcular move
     def move(self, states, character):

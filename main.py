@@ -15,6 +15,6 @@ file_reader = File(filename)
 regex = file_reader.regex
 print(regex)
 # Se crea el AFD
-afd = afdConstruction(regex, "Yalex 1")
+afd = afdConstruction(regex, "Yalex 3")
 afd.simulation("./tests/token_test.txt")
 ScannerProducer(afd, "Yalex_1")
