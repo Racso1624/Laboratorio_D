@@ -115,7 +115,7 @@ def afdConstruction(regex, title):
     # Se crean los estados y transiciones del AFD
     states = ["S0"]
     transitions = []
-    final_states = []
+    final_states = {}
     symbols = getSymbols(regex)
 
     # Se ejecutan las propiedades de los nodos
@@ -152,7 +152,9 @@ def afdConstruction(regex, title):
 
         # Se verifica que los estados encontrados se encuentren en el conjunto de estados finales
         if(set_states.intersection(set_final_states).__len__() != 0):
-            final_states.append(states[state_counter])
+            node_final = set_states.intersection(set_final_states)
+            node_char = node_final.pop().character
+            final_states[states[state_counter]] = node_char
 
         # Se agrega un contador para marcar los estados
         state_counter += 1
@@ -164,7 +166,7 @@ def afdConstruction(regex, title):
     afd.symbols = symbols
     afd.transitions = transitions
     afd.initial_state = states[0]
-    afd.final_state = final_states
+    afd.final_states = final_states
     afd.graphAF()
 
     return afd

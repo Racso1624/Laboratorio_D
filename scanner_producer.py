@@ -13,6 +13,6 @@ class ScannerProducer(object):
         file.write(f"        self.states = {self.afd.states}\n")
         file.write(f"        self.transitions = {self.afd.transitions}\n")
         file.write(f"        self.initial_state = '{self.afd.initial_state}'\n")
-        file.write(f"        self.final_state = {self.afd.final_state}\n")
+        file.write(f"        self.final_state = {self.afd.final_states}\n")
         file.write(f"        self.symbols = {self.afd.symbols}\n")
         file.close()
