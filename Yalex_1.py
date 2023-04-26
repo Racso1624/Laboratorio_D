@@ -12,19 +12,19 @@ class AFD(object):
 
 def tokenScanner(token):
 	if(token == '#ws'):
-		 return WHITESPACE 
+		return WHITESPACE
 	if(token == '#if'):
 		return IF
 	if(token == '#id'):
-		 return ID 
+		return ID
 	if(token == '#+'):
-		 return PLUS 
+		return PLUS
 	if(token == '#*'):
-		 return TIMES 
+		return TIMES
 	if(token == '#('):
-		 return LPAREN 
+		return LPAREN
 	if(token == '#)'):
-		 return RPAREN 
+		return RPAREN
 
 	return ERROR
 

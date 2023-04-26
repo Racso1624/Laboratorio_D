@@ -268,7 +268,7 @@ class File(object):
                     if(actual_token != ""):
                         first_bracket = line.index("{")
                         second_bracket = line.index("}")
-                        code_return = line[first_bracket + 1:second_bracket]
+                        code_return = line[first_bracket + 2:second_bracket - 1]
                         self.tokens_list[actual_token] = code_return
         # Se guarda la expresion regular final en el atributo de la clase
         self.regex = final_regex

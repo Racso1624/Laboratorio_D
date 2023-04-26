@@ -8,3 +8,5 @@
 'yong' = ID
 '\n' = WHITESPACE
 'if' = IF
+'(' = LPAREN
+')' = RPAREN
