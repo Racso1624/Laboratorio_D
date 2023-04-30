@@ -8,7 +8,7 @@ from afd_construction import *
 from scanner_producer import *
 
 # Se toma el filename
-filename = "./tests/slr-1.yal"
+filename = "./tests/slr-4.yal"
 # Se obtiene el filereader
 file_reader = File(filename)
 # Se obtiene la regex
@@ -17,6 +17,6 @@ tokens = file_reader.tokens_list
 print(regex)
 print(tokens)
 # Se crea el AFD
-afd = afdConstruction(regex, "Yalex 1")
+afd = afdConstruction(regex, "Yalex 4")
 afd.simulation("./tests/token_test.txt")
-ScannerProducer(afd, "Yalex_1", tokens)
+ScannerProducer(afd, "Yalex_4", tokens)
