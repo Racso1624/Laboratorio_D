@@ -16,6 +16,8 @@ rule tokens =
   | "if"      { return IF }
   | id        { return ID }               (* Cambie por una acción válida, que devuelva el token *)
   | number    { return NUMBER }
+  | ':'       { return COLON }
+  | '"'       { return QUOTE }
   | ';'       { return SEMICOLON }
   | ":="      { return ASSIGNOP }
   | '<'       { return LT }

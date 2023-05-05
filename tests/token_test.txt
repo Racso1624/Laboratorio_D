@@ -1,26 +1,5 @@
-3.2E3
-ladsl  ;ldaflksadv  laslfv  
+if(yong == Viejo):
+    print("ALV")
 
-aads  ;;
-
-1232902.123p23o 
-
-adsfljad            if 3.141592765
-
-
-hola
-yong
-if()
-:=
-if(hola)
-else
-
-
-
-                    alkjfadslfj
-
-
-        id
-
-
-        if
+if
+if
